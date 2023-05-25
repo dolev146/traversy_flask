@@ -2,13 +2,62 @@
 
 <h1>Register</h1>
 {% from "includes/_formhelpers.html" import render_field %}
-<form method="POST" action="">
-  <div class="form-group">{{render_field(form.name, class_="form-control")}}</div>
-  <div class="form-group">{{render_field(form.username, class_="form-control")}}</div>
-  <div class="form-group">{{render_field(form.email, class_="form-control")}}</div>
-  <div class="form-group">{{render_field(form.password, class_="form-control")}}</div>
-  <div class="form-group">{{render_field(form.confirm, class_="form-control")}}</div>
-  <p><input type="submit" class="btn btn-primary" value="Submit" ></p>
+<form method="POST" action="" id="registration_form">
+  <div class="form-group">
+    {{render_field(form.name, id="name", class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.username,id="username", class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.email, id="email", class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.password,id="password", class_="form-control")}}
+  </div>
+  <div class="form-group">
+    {{render_field(form.confirm,id="confirm", class_="form-control")}}
+  </div>
+
+  <input
+    disabled
+    id="submit_btn"
+    type="submit"
+    class="btn btn-primary"
+    value="Submit"
+  />
 </form>
+
+<script>
+
+  $(document).ready(
+    function () {
+    $("#registration_form input").on("keyup", function () {
+      var name_value = $("#name").val();
+      var username_value = $("#username").val();
+      var email_value = $("#email").val();
+      var password_value = $("#password").val();
+      var confirm_value = $("#confirm").val();
+
+      console.log(name_value);
+
+      if (
+        name_value != "" &&
+        username_value != "" &&
+        email_value != "" &&
+        password_value != "" &&
+        confirm_value != "" &&
+        password_value == confirm_value
+      ) {
+        $("#submit_btn").removeAttr("disabled");
+      } else {
+        $("#submit_btn").attr("disabled", "disabled");
+      }
+    });
+  });
+
+
+
+</script>
 
 {% endblock %}
